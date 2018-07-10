@@ -1,15 +1,12 @@
 package br.ufc.crt.bb;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
 import java.util.Scanner;
 
 import br.ufc.crt.bb.model.Banco;
 import br.ufc.crt.bb.model.Conta;
 import br.ufc.crt.bb.model.enums.ContaTipo;
 
-public class App {
+public class App{
 	public static void main(String[] arguments){
 		Banco bb = new Banco();
 
@@ -19,8 +16,16 @@ public class App {
 		
 		Conta contaDestino, contaOrigem, contaTemp;
 		System.out.println(bb);
+		
+		boolean check = true;
+		
+		
 		do{
-	
+			
+			try{
+			
+			System.out.println();
+			System.out.println();
 			System.out.println("Selecione uma opção para iniciar os trabalhos");
 			System.out.println("1 => Criar Nova Conta");
 			System.out.println("2 => Procurar contas existentes");
@@ -30,8 +35,8 @@ public class App {
 			System.out.println("6 => Ver Saldo/Extrato");
 			System.out.println("7 => Excluir Conta");
 			System.out.println("8 => Listar Contas (ativas e inativas)");
-			
-			opcao = in.nextInt();
+			System.out.println();
+//			opcao = in.nextInt();
 			
 			switch(opcao){
 			case 1:
@@ -57,7 +62,7 @@ public class App {
 					bb.abrirConta(nome, numConta, 0.0, limite, optTipoSelect);
 				}
 				
-				System.out.println("\nDigite 0 para retornar ao menu");
+				System.out.println("\nDigite 0 para retornar ao menu ou -1 para Sair");
 				break;
 			case 2:
 				//procurar contas
@@ -73,7 +78,7 @@ public class App {
 					System.out.printf("\nConta não encontrada \n");
 				}
 				
-				System.out.println("\nDigite 0 para retornar ao menu");
+				System.out.println("\nDigite 0 para retornar ao menu ou -1 para Sair");
 				break;
 			case 3: 
 				//saque
@@ -88,7 +93,7 @@ public class App {
 					bb.saque(contaTemp, saque);
 				}
 					
-				System.out.println("\nDigite 0 para retornar ao menu");
+				System.out.println("\nDigite 0 para retornar ao menu ou -1 para Sair");
 				
 				break;
 			case 4:
@@ -101,7 +106,7 @@ public class App {
 				
 				bb.depositar(contaDestino, valorEnvio);
 				
-				System.out.println("\nDigite 0 para retornar ao Menu Principal: ");
+				System.out.println("\nDigite 0 para retornar ao Menu Principal ou -1 para Sair");
 				break;
 			case 5: 
 				//transferência
@@ -123,7 +128,7 @@ public class App {
 						bb.transfConta(contaOrigem, contaDestino, valorEnvio);
 					}
 				}
-				System.out.println("\nDigite 0 para retornar ao Menu Principal: ");
+				System.out.println("\nDigite 0 para retornar ao Menu Principal ou -1 para Sair");
 				break;
 			case 6:
 				//saldo/extrato
@@ -135,7 +140,7 @@ public class App {
 					bb.extrato(contaTemp);
 				}
 				
-				System.out.println("\nDigite 0 para retornar ao Menu Principal: ");
+				System.out.println("\nDigite 0 para retornar ao Menu Principal ou -1 para Sair");
 				break;
 			case 7:
 				//excluir conta
@@ -149,7 +154,7 @@ public class App {
 				}
 				
 				
-				System.out.println("\nDigite 0 para retornar ao Menu Principal: ");
+				System.out.println("\nDigite 0 para retornar ao Menu Principal ou -1 para Sair");
 				break;
 			case 8:
 				//listar contas
@@ -164,14 +169,23 @@ public class App {
 							listaContas.getTipo());
 				}
 				
-				System.out.println("\nDigite 0 para retornar ao Menu Principal: ");
+				System.out.println("\nDigite 0 para retornar ao Menu Principal ou -1 para Sair");
 				break;
-			default:
-				System.out.println("Opção inválida, tente novamente....");
 			}
 			
-		}while(in.hasNext());
-		
+			opcao = in.nextInt();
+			if(opcao == -1)
+				check = false;
+				
+		}catch(Exception e){
+			System.out.println("\nErro na entrada informada. Digite 0 para Menu novamente ou uma opção do Menu!\n\n");
+			in.next();
+			opcao = in.nextInt();
+		}	
+			
+		}while(check);
+
+		System.out.println("\n------------------------- ATÉ MAIS! -------------------------");
 		System.out.println("\n-------------------------------------------------------------");
 		in.close();
 	}
